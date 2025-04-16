@@ -41,29 +41,3 @@ end
 
 local lsp_names = { "cssls", "tailwindcss", "html", "clangd", "jsonls", "ts_ls", "pyright" }
 setup_lsps(lsp_names)
-
-require("lspconfig").elixirls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	cmd = { "/home/vladi/.local/share/nvim/mason/bin/elixir-ls" },
-	settings = {
-		elixirLS = {
-			dialyzerEnabled = true, -- Enable Dialyzer (optional, can be slow)
-			fetchDeps = false, -- Don't fetch deps automatically
-			suggestSpecs = true, -- Enable function spec suggestions
-			signatureAfterComplete = true,
-			dialyzerFormat = "dialyxir_short",
-			-- 💡 This is the important fix:
-			enableTestLenses = true, -- Enables live diagnostics updates
-		},
-	},
-})
-
-vim.g.rustaceanvim = {
-	server = {
-		on_attach = on_attach,
-	},
-}
-
-vim.g.rustfmt_autosave = 1
-
