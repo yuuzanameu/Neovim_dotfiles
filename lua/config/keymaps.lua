@@ -68,7 +68,7 @@ local normal_keymaps = {
     -- ['<C-h>'] = '<C-w>h',
     -- ['<C-l>'] = '<C-w>l',
     ["<leader>h"] = ":noh<CR>",
-    ["<C-/>"] = toggle_neogit,
+    ["<C-j>"] = toggle_neogit,
 }
 
 local insert_keymaps = {
