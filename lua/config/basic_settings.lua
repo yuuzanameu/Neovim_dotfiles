@@ -49,3 +49,14 @@ vim.opt.hidden = true
 
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+-- dadbod config
+vim.g.db_ui_winwidth = 31
+vim.g.db_ui_table_helpers = {
+	postgresql = {
+		Count = 'select % from "{table};"',
+	},
+}
+vim.g.db_ui_auto_execute_table_helpers = 1
+
+vim.g.cornelis_agda_prefix = "<Tab>"
