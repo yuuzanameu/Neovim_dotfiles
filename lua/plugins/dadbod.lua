@@ -14,3 +14,5 @@ return {
 		vim.g.db_ui_use_nerd_fonts = 1
 	end,
 }
+
+-- new connections just add them in ~/.local/share/db_ui/connections.json

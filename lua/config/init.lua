@@ -2,6 +2,7 @@ require("config.lazy")
 require("config.dashboard")
 require("config.cmp_snippets")
 require("config.which-key-maps")
+require("config.agda-which-key")
 
 -- config/init.lua
 local config_path = vim.fn.stdpath("config")
