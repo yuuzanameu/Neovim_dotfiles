@@ -21,6 +21,7 @@
   "guard.nvim": { "branch": "main", "commit": "9a9f00a6f70e5da2ea8379f203fcd45d8a7250cc" },
   "haskell-tools.nvim": { "branch": "master", "commit": "5fa6671ff4face61be6a439b085c4977c20a60dc" },
   "idris2-nvim": { "branch": "main", "commit": "e3d4242a525ec8f1e0846f47b9730035a046100f" },
+  "image.nvim": { "branch": "master", "commit": "446a8a5cc7a3eae3185ee0c697732c32a5547a0b" },
   "indent-blankline.nvim": { "branch": "master", "commit": "005b56001b2cb30bfa61b7986bc50657816ba4ba" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lean.nvim": { "branch": "main", "commit": "a04cc6f296271fc99468b97ff1dcf12efebf3b5d" },
