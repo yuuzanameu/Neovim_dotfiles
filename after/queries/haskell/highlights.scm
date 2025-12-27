@@ -9,3 +9,6 @@
 ;
 ;
 ;
+
+; ((string) @string
+;  (#match? @string "^\"\"\""))

@@ -23,19 +23,19 @@ return {
       try_fallback = false, -- Don't try fallback formatters
     })
 
-    ft("ocaml"):fmt({
-      cmd = "ocamlformat",
-      args = {
-        "--enable-outside-detected-project",
-        "--profile=janestreet",
-        "--let-binding-indent=4",
-        "--if-then-else=fit-or-vertical",
-        "--name",
-        "dummy.ml",
-        "-",
-      },
-      stdin = true,
-    })
+    -- ft("ocaml"):fmt({
+    --   cmd = "ocamlformat",
+    --   args = {
+    --     "--enable-outside-detected-project",
+    --     "--profile=janestreet",
+    --     "--let-binding-indent=4",
+    --     "--if-then-else=fit-or-vertical",
+    --     "--name",
+    --     "dummy.ml",
+    --     "-",
+    --   },
+    --   stdin = true,
+    -- })
 
     ft("purescript"):fmt({
       cmd = "/home/vladi/.nvm/versions/node/v22.11.0/bin/purs-tidy",
