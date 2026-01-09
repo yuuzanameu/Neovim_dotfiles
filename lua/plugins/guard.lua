@@ -5,6 +5,11 @@ return {
   config = function()
     local ft = require("guard.filetype")
 
+    ft("sql"):fmt({
+      cmd = "sql-formatter",
+      args = { "-l", "postgresql"},
+      stdin = true,
+    })
     ft("c,cpp"):fmt({
       cmd = "clang-format",
       args = { "--style={IndentWidth: 4}" },
@@ -64,10 +69,10 @@ return {
     })
 
     vim.g.guard_config = {
-      fmt_on_save = false,
+      fmt_on_save = true,
       -- use lsp if no formatter was defined for this filetype
       lsp_as_default_formatter = false,
-      save_on_fmt = false,
+      -- save_on_fmt = true,
       auto_lint = false,
       lint_interval = 500,
     }

@@ -75,6 +75,7 @@ local normal_keymaps = {
 	-- jumping by empty lines
 	["<C-Up>"] = "{",
 	["<C-Down>"] = "}",
+    ["<C-w>h"] = "<Esc>:split<CR>"
 }
 
 local insert_keymaps = {
@@ -86,7 +87,7 @@ local insert_keymaps = {
 }
 
 local visual_keymaps = {
-	["<C-s>"] = "Esc:w<CR>",
+	["<C-s>"] = "<Esc>:w<CR>",
 	["<C-Up>"] = "{",
 	["<C-Down>"] = "}",
 }
