@@ -68,6 +68,13 @@ return {
       args = { "-stdin" },
     })
 
+    ft("cs"):fmt({
+      cmd = "csharpier",
+      args = {"format", "--write-stdout", "--skip-validation" },
+      stdin = true,
+      ignore_error = true
+    })
+
     vim.g.guard_config = {
       fmt_on_save = true,
       -- use lsp if no formatter was defined for this filetype
