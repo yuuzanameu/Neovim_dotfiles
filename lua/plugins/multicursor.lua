@@ -10,8 +10,8 @@ local M = {
     -- Add or skip cursor above/below the main cursor.
     set({"n"}, "k", function() mc.lineAddCursor(-1) end)
     set({"n"}, "j", function() mc.lineAddCursor(1) end)
-    -- set({"n", "x"}, "<leader><up>", function() mc.lineSkipCursor(-1) end)
-    -- set({"n", "x"}, "<leader><down>", function() mc.lineSkipCursor(1) end)
+    set({"n"}, "<leader>k", function() mc.lineSkipCursor(-1) end)
+    set({"n"}, "<leader>j", function() mc.lineSkipCursor(1) end)
 
     set("x", "<leader>M", mc.matchCursors)
     set("x", "<leader>S", mc.splitCursors)
@@ -24,7 +24,7 @@ local M = {
     set("n", "<leader>a", mc.alignCursors)
 
     -- Rotate the text contained in each visual selection between cursors.
-    set("x", "<leader>t", function() mc.transposeCursors(1) end)
+    set("x", "t", function() mc.transposeCursors(1) end)
     set("x", "<leader>T", function() mc.transposeCursors(-1) end)
 
     -- Append/insert for each line of visual selections.

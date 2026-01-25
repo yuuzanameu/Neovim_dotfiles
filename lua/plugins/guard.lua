@@ -19,14 +19,17 @@ return {
     ft("json,jsonc"):fmt("prettierd")
     ft("typescript,javascript,typescriptreact"):fmt("prettierd")
 
-    ft("haskell"):fmt({
-      cmd = "/usr/bin/fourmolu",
-      args = { "--stdin-input-file", "$FILENAME" },
-      stdin = true,
-      ignore_error = true,
-      no_append_cr = true,  -- Don't append carriage return
-      try_fallback = false, -- Don't try fallback formatters
-    })
+    -- FOURMOLU
+    -- ft("haskell"):fmt({
+    --   cmd = "/usr/bin/fourmolu",
+    --   args = { "--stdin-input-file", "$FILENAME" },
+    --   stdin = true,
+    --   ignore_error = true,
+    --   no_append_cr = true, 
+    --   try_fallback = false,
+    -- })
+    
+    ft("haskell"):fmt("ormolu")
 
     -- ft("ocaml"):fmt({
     --   cmd = "ocamlformat",
