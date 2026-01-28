@@ -75,7 +75,13 @@ require("lspconfig").ocamllsp.setup({
 	cmd = { "/home/vladi/.opam/4.14.2/bin/ocamllsp" },
 })
 
--- require("lspconfig").jdtls.setup({})
+require("lspconfig").uiua.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = { "uiua", "lsp" },
+	filetypes = { "uiua" },
+	root_markers = { "main.ua", ".fmt.ua", ".git" },
+})
 
 vim.g.rustaceanvim = {
 	server = {

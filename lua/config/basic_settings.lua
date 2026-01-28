@@ -55,9 +55,9 @@ vim.opt.hidden = true
 -- dadbod config
 vim.g.db_ui_winwidth = 31
 vim.g.db_ui_table_helpers = {
-    postgresql = {
-        Count = 'select % from "{table};"',
-    },
+  postgresql = {
+    Count = 'select % from "{table};"',
+  },
 }
 vim.g.db_ui_auto_execute_table_helpers = 1
 vim.g.db_ui_win_position = "right"
@@ -86,3 +86,9 @@ vim.opt.fixeol = false
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 vim.g.cornelis_split_location = "bottom"
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99

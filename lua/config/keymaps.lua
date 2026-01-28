@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>c", "<cmd>bd<cr>", {
 })
 vim.keymap.set("i", "<C-BS>", "<C-w>", { noremap = true })
 
---vim.keymap.del("n", "c") -- Normal mode
+-- vim.keymap.del("n", "zm") -- Normal mode
 --vim.keymap.del("i", "c") -- Insert mode
 --vim.keymap.del("v", "c") -- Visual mode
 -- In your keymaps.lua or directly in the Comment.nvim config
@@ -75,7 +75,7 @@ local normal_keymaps = {
 	-- jumping by empty lines
 	["<C-Up>"] = "{",
 	["<C-Down>"] = "}",
-    ["<C-w>h"] = "<Esc>:split<CR>"
+	["<C-w>h"] = "<Esc>:split<CR>",
 }
 
 local insert_keymaps = {
