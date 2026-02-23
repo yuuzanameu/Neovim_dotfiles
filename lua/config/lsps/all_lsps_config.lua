@@ -1,40 +1,23 @@
 local on_attach = function(client, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
 	vim.keymap.set("n", "gr", function()
 		require("telescope.builtin").lsp_references()
-	end, { desc = "Goto definition" })
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Lsp Hover" })
-
-	-- Enable formatting on save
-	-- if client.server_capabilities.documentFormattingProvider then
-	-- 	vim.api.nvim_create_autocmd("BufWritePre", {
-	-- 		group = vim.api.nvim_create_augroup("FormatOnSave", { clear = true }),
-	-- 		buffer = bufnr,
-	-- 		callback = function()
-	-- 			vim.lsp.buf.format({})
-	-- 		end,
-	-- 	})
-	-- end
+	end, { desc = "Goto references", buffer = bufnr })
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Lsp Hover", buffer = bufnr })
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local function setup_lsps(lsp_names)
-	for _, lsp_name in ipairs(lsp_names) do
-		local status, err = pcall(function()
-			require("lspconfig")[lsp_name].setup({
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
-		end)
-		if not status then
-			print("Error setting up LSP:", lsp_name, "->", err)
-		end
-	end
-end
+-- Base configuration shared across servers
+local base_config = {
+	on_attach = on_attach,
+	capabilities = capabilities,
+}
 
+-- Servers without special configuration
 local lsp_names = {
 	"cssls",
 	"tailwindcss",
@@ -49,48 +32,69 @@ local lsp_names = {
 	"roslyn",
 }
 
-setup_lsps(lsp_names)
+for _, name in ipairs(lsp_names) do
+	vim.lsp.config(name, base_config)
+	vim.lsp.enable(name)
+end
 
-require("lspconfig").elixirls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	cmd = { "/home/vladi/.local/share/nvim/mason/bin/elixir-ls" },
-	-- cmd = {"/home/vladi/.local/share/nvim/mason/packages/elixir-ls/language_server.sh"},
-	settings = {
-		elixirLS = {
-			dialyzerEnabled = false, -- Enable Dialyzer (optional, can be slow)
-			fetchDeps = false, -- Don't fetch deps automatically
-			suggestSpecs = true, -- Enable function spec suggestions
-			signatureAfterComplete = true,
-			dialyzerFormat = "dialyxir_short",
-			enableTestLenses = true, -- Enables live diagnostics updates
+-- Elixir
+vim.lsp.config(
+	"elixirls",
+	vim.tbl_deep_extend("force", base_config, {
+		cmd = { "/home/vladi/.local/share/nvim/mason/bin/elixir-ls" },
+		settings = {
+			elixirLS = {
+				dialyzerEnabled = false,
+				fetchDeps = false,
+				suggestSpecs = true,
+				signatureAfterComplete = true,
+				dialyzerFormat = "dialyxir_short",
+				enableTestLenses = true,
+			},
 		},
-	},
-})
+	})
+)
+vim.lsp.enable("elixirls")
 
-require("lspconfig").ocamllsp.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-	cmd = { "/home/vladi/.opam/4.14.2/bin/ocamllsp" },
-})
+-- OCaml
+vim.lsp.config(
+	"ocamllsp",
+	vim.tbl_deep_extend("force", base_config, {
+		cmd = { "/home/vladi/.opam/4.14.2/bin/ocamllsp" },
+		filetypes = {
+			"ocaml",
+			"ocaml.menhir",
+			"ocaml.interface",
+			"ocaml.ocamllex",
+			"reason",
+			"dune",
+		},
+	})
+)
+vim.lsp.enable("ocamllsp")
 
-require("lspconfig").uiua.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	cmd = { "uiua", "lsp" },
-	filetypes = { "uiua" },
-	root_markers = { "main.ua", ".fmt.ua", ".git" },
-})
+-- Uiua
+vim.lsp.config(
+	"uiua",
+	vim.tbl_deep_extend("force", base_config, {
+		cmd = { "uiua", "lsp" },
+		filetypes = { "uiua" },
+		root_markers = { "main.ua", ".fmt.ua", ".git" },
+	})
+)
+vim.lsp.enable("uiua")
 
+-- Rust (rustaceanvim handles rust-analyzer internally)
 vim.g.rustaceanvim = {
 	server = {
 		on_attach = on_attach,
+		capabilities = capabilities,
 	},
 }
 
 vim.g.rustfmt_autosave = 2
 
+-- nvim-cmp SQL setup
 local cmp = require("cmp")
 
 cmp.setup.filetype({ "sql" }, {
