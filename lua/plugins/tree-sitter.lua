@@ -16,7 +16,7 @@ return {
 
     configs.setup({
       auto_install = true,
-      ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html", "haskell", "json" },
+      ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html", "haskell", "json", "jsdoc" },
       sync_install = false,
       highlight = {
         enable = true,
