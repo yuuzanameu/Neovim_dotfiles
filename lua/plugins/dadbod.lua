@@ -1,4 +1,4 @@
-return {
+local M = {
 	"kristijanhusak/vim-dadbod-ui",
 	dependencies = {
 		{ "tpope/vim-dadbod", lazy = true },
@@ -15,4 +15,5 @@ return {
 	end,
 }
 
+return {}
 -- new connections just add them in ~/.local/share/db_ui/connections.json

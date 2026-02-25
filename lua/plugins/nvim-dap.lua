@@ -2,9 +2,6 @@ return {
 	"mfussenegger/nvim-dap",
 	lazy = true,
 	dependencies = {
-		"rcarriga/nvim-dap-ui",
-		"nvim-neotest/nvim-nio",
-		"theHamsta/nvim-dap-virtual-text",
 		{
 			"williamboman/mason.nvim",
 			opts = function(_, opts)
@@ -13,15 +10,12 @@ return {
 			end,
 		},
 	},
-	opts = function()
+	config = function()
 		local dap = require("dap")
-		local ui = require("dapui")
-		-- Keymaps
 
-		-- require("dapui").setup()
-
-		vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
+		vim.keymap.set("n", "<leader>dd", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 		vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Start/Continue Debugging" })
+		vim.keymap.set("n", "<leader>ds", dap.step_over, { desc = "Step over" })
 		-- Adapter setup;
 		if not dap.adapters["pwa-node"] then
 			dap.adapters["pwa-node"] = {
@@ -54,21 +48,11 @@ return {
 
 		local js_filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" }
 
-		-- VS Code integration
 		local vscode = require("dap.ext.vscode")
-
 		-- Allow comments in launch.json
 		vscode.json_decode = function(str)
 			return vim.json.decode(require("plenary.json").json_strip_comments(str))
 		end
-
-		-- Map VS Code debugger types to filetypes
-		vscode.type_to_filetypes["node"] = js_filetypes
-		vscode.type_to_filetypes["pwa-node"] = js_filetypes
-
-		-- 🔥 THIS is what LazyVim does that you're missing
-		-- Load .vscode/launch.json if it exists
-		vscode.load_launchjs()
 
 		-- Fallback configurations (used if no launch.json exists)
 		for _, language in ipairs(js_filetypes) do

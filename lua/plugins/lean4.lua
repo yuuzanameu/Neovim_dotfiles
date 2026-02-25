@@ -20,7 +20,7 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-return {
+local M = {
 	"Julian/lean.nvim",
 	event = { "BufReadPre *.lean", "BufNewFile *.lean" },
 
@@ -44,3 +44,5 @@ return {
 		})
 	end,
 }
+
+return {}
