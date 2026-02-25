@@ -2,6 +2,7 @@ return {
 	"mfussenegger/nvim-dap",
 	lazy = true,
 	dependencies = {
+		"theHamsta/nvim-dap-virtual-text",
 		{
 			"williamboman/mason.nvim",
 			opts = function(_, opts)
@@ -12,10 +13,22 @@ return {
 	},
 	config = function()
 		local dap = require("dap")
+		require("nvim-dap-virtual-text").setup({
+			display_callback = function(variable)
+				-- Hide anything longer than 100 characters
+				if variable.value and #variable.value > 100 then
+					return ""
+				end
+				return variable.value or ""
+			end,
+		})
 
 		vim.keymap.set("n", "<leader>dd", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 		vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Start/Continue Debugging" })
 		vim.keymap.set("n", "<leader>ds", dap.step_over, { desc = "Step over" })
+		vim.keymap.set("n", "<leader>dx", "<cmd>:DapTerminate<cr>", { desc = "Terminate" })
+		vim.keymap.set("n", "<leader>dt", "<cmd>:DapToggleRepl<cr>", { desc = "Toggle DAP repl" })
+		vim.keymap.set("n", "<leader>de", "<cmd>:DapClearBreakpoints<cr>", { desc = "Clear all breakpoints" })
 		-- Adapter setup;
 		if not dap.adapters["pwa-node"] then
 			dap.adapters["pwa-node"] = {
