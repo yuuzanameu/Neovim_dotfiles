@@ -1,4 +1,5 @@
 local on_attach = function(client, bufnr)
+    client.server_capabilities.semanticTokensProvider = nil
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition", noremap = true, silent = true })
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Goto implementation" })
 	vim.keymap.set("n", "gr", function()
@@ -37,6 +38,8 @@ local M = {
 	},
 	config = function()
 		local opts = {
+            autostart_semantic = false,
+            use_default_semantic_hl_groups = false,
 			server = {
 				on_attach = on_attach,
 				capabilities = capabilities,
@@ -49,4 +52,4 @@ local M = {
 	end,
 }
 
-return {}
+return M
