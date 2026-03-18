@@ -30,6 +30,7 @@ local lsp_names = {
 	"ada_ls",
 	"ols",
 	"roslyn",
+    "gopls"
 }
 
 for _, name in ipairs(lsp_names) do

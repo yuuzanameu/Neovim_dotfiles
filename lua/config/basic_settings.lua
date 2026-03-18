@@ -34,8 +34,8 @@ vim.opt.hlsearch = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
 vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.shiftwidth = 2   -- Number of spaces to use for each step of (auto)indent
-vim.opt.tabstop = 4      -- Number of spaces that a <Tab> counts for
+vim.opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent
+vim.opt.tabstop = 4 -- Number of spaces that a <Tab> counts for
 
 -- Set the default file encoding
 -- vim.opt.encoding = 'utf-8'
@@ -55,9 +55,9 @@ vim.opt.hidden = true
 -- dadbod config
 vim.g.db_ui_winwidth = 31
 vim.g.db_ui_table_helpers = {
-  postgresql = {
-    Count = 'select % from "{table};"',
-  },
+	postgresql = {
+		Count = 'select % from "{table};"',
+	},
 }
 vim.g.db_ui_auto_execute_table_helpers = 1
 vim.g.db_ui_win_position = "right"

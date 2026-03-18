@@ -77,6 +77,8 @@ return {
 			stdin = true,
 			ignore_error = true,
 		})
+        
+        ft("go"):fmt("gofumpt")
 
 		vim.g.guard_config = {
 			fmt_on_save = true,
