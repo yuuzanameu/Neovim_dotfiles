@@ -7,7 +7,7 @@ vim.opt.undofile = true
 vim.opt.relativenumber = true
 vim.opt.number = true
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 
 vim.opt.showmatch = true
 
@@ -92,3 +92,10 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = ""
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
+
+vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "BufEnter" }, {
+	pattern = { "lean", "*.lean" },
+	callback = function()
+		vim.opt_local.winfixbuf = false
+	end,
+})

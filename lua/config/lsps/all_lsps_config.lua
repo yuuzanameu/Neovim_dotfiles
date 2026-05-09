@@ -1,5 +1,17 @@
 local on_attach = function(client, bufnr)
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	if client.server_capabilities.inlayHintProvider then
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+	end
+
+	-- if client.supports_method("textDocument/formatting") then
+	-- 	vim.api.nvim_create_autocmd("BufWritePre", {
+	-- 		buffer = bufnr,
+	-- 		callback = function()
+	-- 			vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
+	-- 		end,
+	-- 	})
+	-- end
 
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
@@ -30,7 +42,7 @@ local lsp_names = {
 	"ada_ls",
 	"ols",
 	"roslyn",
-    "gopls"
+	"gopls",
 }
 
 for _, name in ipairs(lsp_names) do
@@ -103,4 +115,46 @@ cmp.setup.filetype({ "sql" }, {
 		{ name = "vim-dadbod-completion" },
 		{ name = "buffer" },
 	},
+})
+
+-- nim lsp
+-- Nim Registration
+vim.lsp.config(
+	"nimlangserver",
+	vim.tbl_deep_extend("force", base_config, {
+		cmd = { "nimlangserver" }, -- Ensure this is in your $PATH
+		filetypes = { "nim", "nims"},
+		root_markers = { "*.nimble", "nim.cfg", "config.nims", ".git" },
+		handlers = {
+			["window/showMessage"] = function(_, result, ctx)
+				-- Only show the message if it's an Error (1) or Warning (2)
+				-- Info is (3), Log is (4)
+				if result.type <= 2 then
+					vim.lsp.handlers["window/showMessage"](_, result, ctx)
+				end
+			end,
+			["window/logMessage"] = function(_, result, ctx)
+				-- Silent by default for logs
+				return
+			end,
+		},
+		settings = {
+			nim = {
+				inlayHints = {
+					typeHints = true,
+					exceptionHints = true,
+					parameterHints = true,
+				},
+			},
+		},
+	})
+)
+
+-- Replace vim.lsp.enable with this if you want zero prompts:
+vim.lsp.enable("nimlangserver")
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "nim", "nims", "nimble" },
+	callback = function(args)
+		vim.lsp.start("nimlangserver")
+	end,
 })

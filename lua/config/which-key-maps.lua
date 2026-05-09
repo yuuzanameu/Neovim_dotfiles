@@ -27,6 +27,7 @@ wk.add({
 		group = "buffers",
 		mode = { "n" },
 		{ "<leader>bf", "<cmd>Telescope buffers<cr>", desc = "Find Open Buffers" },
+		{ "<leader>bd", ":%bd | e# | bd#<cr>", desc = "Delete all buffers except current" },
 	},
 
 	{
