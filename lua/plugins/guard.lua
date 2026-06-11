@@ -5,9 +5,14 @@ return {
   config = function()
     local ft = require("guard.filetype")
 
+    -- ft("sql"):fmt({
+    --   cmd = "sql-formatter",
+    --   args = { "-l", "postgresql" },
+    --   stdin = true,
+    -- })
     ft("sql"):fmt({
-      cmd = "sql-formatter",
-      args = { "-l", "postgresql" },
+      cmd = "sqlfluff",
+      args = {"format", "--disable-progress-bar", "-"},
       stdin = true,
     })
     ft("c,cpp"):fmt({
@@ -46,11 +51,11 @@ return {
     --   stdin = true,
     -- })
 
-    ft("purescript"):fmt({
-      cmd = "/home/vladi/.nvm/versions/node/v22.11.0/bin/purs-tidy",
-      args = { "format" },
-      stdin = true,
-    })
+    -- ft("purescript"):fmt({
+    --   cmd = "/home/vladi/.nvm/versions/node/v22.11.0/bin/purs-tidy",
+    --   args = { "format" },
+    --   stdin = true,
+    -- })
 
     ft("lua"):fmt("stylua")
 
