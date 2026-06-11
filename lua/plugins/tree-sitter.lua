@@ -1,9 +1,8 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
   build = ":TSUpdate",
   config = function()
-    local configs = require("nvim-treesitter.configs")
-
     local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
     parser_config.string_interpolate = {
       install_info = {
@@ -14,16 +13,17 @@ return {
       used_by = { "haskell" },       -- additional filetypes that use this parser
     }
 
-    configs.setup({
-      auto_install = true,
-      ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html", "haskell", "json", "jsdoc" },
-      sync_install = false,
-      highlight = {
-        enable = true,
-      },
-      indent = { enable = true },
-      additional_vim_regex_highlighting = false,
-      ignore_install = {},
-    })
+    -- local configs = require("nvim-treesitter.configs")
+    -- configs.setup({
+    --   auto_install = true,
+    --   ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html", "haskell", "json", "jsdoc" },
+    --   sync_install = false,
+    --   highlight = {
+    --     enable = true,
+    --   },
+    --   indent = { enable = true },
+    --   additional_vim_regex_highlighting = false,
+    --   ignore_install = {},
+    -- })
   end,
 }
