@@ -2,28 +2,38 @@ return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
   build = ":TSUpdate",
+  -- init = function()
+  --   vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/lazy/nvim-treesitter/runtime")
+  -- end,
   config = function()
-    -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-    -- parser_config.string_interpolate = {
-    --   install_info = {
-    --     url = "~/coding/tree-sitter-string_interpolate",
-    --     files = { "src/parser.c" }
-    --   },
-    --   -- filetype = "string_interpolate", -- if filetype does not agrees with parser name
-    --   used_by = { "haskell" },       -- additional filetypes that use this parser
-    -- }
-
-    -- local configs = require("nvim-treesitter.configs")
-    -- configs.setup({
-    --   auto_install = true,
-    --   ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html", "haskell", "json", "jsdoc"},
-    --   sync_install = false,
-    --   highlight = {
-    --     enable = true,
-    --   },
-    --   indent = { enable = true },
-    --   additional_vim_regex_highlighting = false,
-    --   ignore_install = {},
-    -- })
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function()
+        pcall(vim.treesitter.start)
+      end,
+    })
   end,
+  -- config = function()
+  --    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+  --    parser_config.string_interpolate = {
+  --      install_info = {
+  --        url = "~/coding/tree-sitter-string_interpolate",
+  --        files = { "src/parser.c" }
+  --      },
+  --      -- filetype = "string_interpolate", -- if filetype does not agrees with parser name
+  --      used_by = { "haskell" },       -- additional filetypes that use this parser
+  --    }
+  --
+  --    local configs = require("nvim-treesitter.configs")
+  --    configs.setup({
+  --      auto_install = true,
+  --      ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html", "haskell", "json", "jsdoc"},
+  --      sync_install = false,
+  --      highlight = {
+  --        enable = true,
+  --      },
+  --      indent = { enable = true },
+  --      additional_vim_regex_highlighting = false,
+  --      ignore_install = {},
+  --    })
+  -- end,
 }
