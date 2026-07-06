@@ -34,8 +34,10 @@ return {
 		-- Only one of these is needed.
 		"nvim-telescope/telescope.nvim", -- optional
 	},
+
 	keys = {
-		{ "<C-/>", toggle_neogit, desc = "Toggle neogit" },
+		{ "<M-/>", toggle_neogit, desc = "Toggle neogit" },
 	},
+
 	config = true,
 }

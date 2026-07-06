@@ -22,12 +22,10 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls",
-          "clangd",
           "cssls",
           "html",
           "jsonls",
           "pyright",
-          "elixirls",
           "rust_analyzer",
           "tailwindcss",
           "ts_ls",

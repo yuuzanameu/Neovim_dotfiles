@@ -1,103 +1,104 @@
 return {
-  "nvimdev/guard.nvim",
-  dependencies = "nvimdev/guard-collection",
-  event = "BufReadPre",
-  config = function()
-    local ft = require("guard.filetype")
+	"nvimdev/guard.nvim",
+	dependencies = "nvimdev/guard-collection",
+	event = "BufReadPre",
+	config = function()
+		local ft = require("guard.filetype")
 
-    -- ft("sql"):fmt({
-    --   cmd = "sql-formatter",
-    --   args = { "-l", "postgresql" },
-    --   stdin = true,
-    -- })
-    ft("sql"):fmt({
-      cmd = "sqlfluff",
-      args = {"format", "--disable-progress-bar", "-"},
-      stdin = true,
-    })
-    ft("c,cpp"):fmt({
-      cmd = "clang-format",
-      args = { "--style={IndentWidth: 4}" },
-      stdin = true,
-    })
+		-- ft("sql"):fmt({
+		--   cmd = "sql-formatter",
+		--   args = { "-l", "postgresql" },
+		--   stdin = true,
+		-- })
+		ft("sql"):fmt({
+			cmd = "sqlfluff",
+			args = { "format", "--disable-progress-bar", "-" },
+			stdin = true,
+		})
+		ft("c,cpp"):fmt({
+			cmd = "clang-format",
+			args = { "--style={IndentWidth: 4}" },
+			stdin = true,
+		})
 
-    ft("json,jsonc"):fmt("prettierd")
-    ft("typescript,javascript,typescriptreact"):fmt("biome")
-    -- ft("typescript,javascript,typescriptreact"):fmt("prettierd")
+		ft("json,jsonc"):fmt("prettierd")
+		ft("typescript,javascript,typescriptreact"):fmt("biome")
+		-- ft("typescript,javascript,typescriptreact"):fmt("prettierd")
 
-    -- FOURMOLU
-    -- ft("haskell"):fmt({
-    --   cmd = "/usr/bin/fourmolu",
-    --   args = { "--stdin-input-file", "$FILENAME" },
-    --   stdin = true,
-    --   ignore_error = true,
-    --   no_append_cr = true,
-    --   try_fallback = false,
-    -- })
+		-- FOURMOLU
+		-- ft("haskell"):fmt({
+		--   cmd = "/usr/bin/fourmolu",
+		--   args = { "--stdin-input-file", "$FILENAME" },
+		--   stdin = true,
+		--   ignore_error = true,
+		--   no_append_cr = true,
+		--   try_fallback = false,
+		-- })
 
-    ft("haskell"):fmt("ormolu")
+		-- ft("haskell"):fmt("ormolu")
 
-    -- ft("ocaml"):fmt({
-    --   cmd = "ocamlformat",
-    --   args = {
-    --     "--enable-outside-detected-project",
-    --     "--profile=janestreet",
-    --     "--let-binding-indent=4",
-    --     "--if-then-else=fit-or-vertical",
-    --     "--name",
-    --     "dummy.ml",
-    --     "-",
-    --   },
-    --   stdin = true,
-    -- })
+		-- ft("ocaml"):fmt({
+		--   cmd = "ocamlformat",
+		--   args = {
+		--     "--enable-outside-detected-project",
+		--     "--profile=janestreet",
+		--     "--let-binding-indent=4",
+		--     "--if-then-else=fit-or-vertical",
+		--     "--name",
+		--     "dummy.ml",
+		--     "-",
+		--   },
+		--   stdin = true,
+		-- })
 
-    -- ft("purescript"):fmt({
-    --   cmd = "/home/vladi/.nvm/versions/node/v22.11.0/bin/purs-tidy",
-    --   args = { "format" },
-    --   stdin = true,
-    -- })
+		-- ft("purescript"):fmt({
+		--   cmd = "/home/vladi/.nvm/versions/node/v22.11.0/bin/purs-tidy",
+		--   args = { "format" },
+		--   stdin = true,
+		-- })
 
-    ft("lua"):fmt("stylua")
+		ft("lua"):fmt("stylua")
 
-    ft("python"):fmt("isort")
+		ft("python"):fmt("isort")
 
-    ft("rust"):fmt({
-      cmd = "/home/vladi/.cargo/bin/rustfmt",
-      ignore_error = true,
-      no_append_cr = true,  -- Don't append carriage return
-      try_fallback = false, -- Don't try fallback formatters
-    })
+		-- ft("rust"):fmt({
+		--   cmd = "/home/vladi/.cargo/bin/rustfmt",
+		--   ignore_error = true,
+		--   no_append_cr = true,  -- Don't append carriage return
+		--   try_fallback = false, -- Don't try fallback formatters
+		-- })
+		--
+		-- ft("odin"):fmt({
+		--   cmd = "odinfmt",
+		--   ignore_error = true,
+		--   no_append_cr = true,
+		--   try_fallback = false,
+		--   stdin = true,
+		--   args = { "-stdin" },
+		-- })
+		--
+		-- ft("cs"):fmt({
+		--   cmd = "csharpier",
+		--   args = { "format", "--write-stdout", "--skip-validation" },
+		--   stdin = true,
+		--   ignore_error = true,
+		-- })
+		--
+		-- ft("go"):fmt("gofumpt")
+		--
 
-    ft("odin"):fmt({
-      cmd = "odinfmt",
-      ignore_error = true,
-      no_append_cr = true,
-      try_fallback = false,
-      stdin = true,
-      args = { "-stdin" },
-    })
-
-    ft("cs"):fmt({
-      cmd = "csharpier",
-      args = { "format", "--write-stdout", "--skip-validation" },
-      stdin = true,
-      ignore_error = true,
-    })
-
-    ft("go"):fmt("gofumpt")
-
-    ft("nim"):fmt({
-      cmd = "nph",
-      args = { "-" },      -- Tells nph to read from stdin
-      stdin = true,        -- Tells guard to pipe the buffer content to the command
-      ignore_error = true, -- Prevents annoying popups if you have a syntax error
-    })
-
-    vim.g.guard_config = {
-      fmt_on_save = true,
-      lsp_as_default_formatter = false,
-      auto_lint = false,
-      lint_interval = 500,
-    }
-  end,
+		-- ft("nim"):fmt({
+		--   cmd = "nph",
+		--   args = { "-" },      -- Tells nph to read from stdin
+		--   stdin = true,        -- Tells guard to pipe the buffer content to the command
+		--   ignore_error = true, -- Prevents annoying popups if you have a syntax error
+		-- })
+		--
+		vim.g.guard_config = {
+			fmt_on_save = true,
+			lsp_as_default_formatter = false,
+			auto_lint = false,
+			lint_interval = 500,
+		}
+	end,
 }
