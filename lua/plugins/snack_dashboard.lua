@@ -21,7 +21,7 @@ local shinchan = [[⠀
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⡘⠤⡁⠀⢡⠘⡠⢁⠣⡐⢡⠘⡰⢀⠎⠄⢣⠘⢠⠃⠔⡡⠘⡄⢊⠤⠑⡨⢐⠡⠒⡠⠀⣿⣿
 ]]
 
-local gif = "cactus"
+local gif = "chrome"
 
 return {
 	"folke/snacks.nvim",

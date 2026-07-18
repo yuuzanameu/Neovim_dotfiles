@@ -8,6 +8,15 @@ return {
         "<cmd>Yazi<cr>",
         desc = "Open yazi at the current file",
       },
+      -- {
+      --   '<leader>zz',
+      --   function()
+      --     require('yazi').yazi(nil, vim.fn.getcwd(), nil, {
+      --       args = { '--cmd', 'plugin fzf' }
+      --     })
+      --   end,
+      --   desc = "Open yazi with fzf jump",
+      -- },
       {
         "<leader>zz",
         "<cmd>Yazi cwd<cr>",
