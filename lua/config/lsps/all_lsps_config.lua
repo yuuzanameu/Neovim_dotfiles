@@ -43,6 +43,8 @@ local lsp_names = {
 	"ols",
 	"roslyn",
 	"gopls",
+	"postgres_lsp",
+    "svelte"
 }
 
 for _, name in ipairs(lsp_names) do
@@ -123,7 +125,7 @@ vim.lsp.config(
 	"nimlangserver",
 	vim.tbl_deep_extend("force", base_config, {
 		cmd = { "nimlangserver" }, -- Ensure this is in your $PATH
-		filetypes = { "nim", "nims"},
+		filetypes = { "nim", "nims" },
 		root_markers = { "*.nimble", "nim.cfg", "config.nims", ".git" },
 		handlers = {
 			["window/showMessage"] = function(_, result, ctx)
