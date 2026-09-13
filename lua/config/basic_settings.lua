@@ -99,3 +99,9 @@ vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "BufEnter" }, {
 		vim.opt_local.winfixbuf = false
 	end,
 })
+
+vim.api.nvim_create_user_command("LspNames", function()
+	for _, c in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+		print(c.name)
+	end
+end, {})
