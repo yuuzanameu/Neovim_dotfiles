@@ -29,22 +29,31 @@ local base_config = {
 	capabilities = capabilities,
 }
 
-local tsc7_project = "/home/vladi/work/Letest/letest-backend"
+local tsc7_projects = {
+	"/home/vladi/work/Letest/letest-backend",
+	"/home/vladi/work/Horizon/horizon-contracts",
+}
 
 local function in_tsc7_project(bufnr)
 	local fname = vim.api.nvim_buf_get_name(bufnr)
-	return fname:sub(1, #tsc7_project) == tsc7_project
+	for _, project in ipairs(tsc7_projects) do
+		if fname:sub(1, #project) == project then
+			return project
+		end
+	end
+	return nil
 end
 
--- New TS7 LSP client, scoped only to that repo
+-- New TS7 LSP client, scoped only to the repos listed above
 vim.lsp.config(
 	"tsc7",
 	vim.tbl_deep_extend("force", base_config, {
-		cmd = { tsc7_project .. "/node_modules/.bin/tsc", "--lsp", "--stdio" },
+		cmd = { tsc7_projects[1] .. "/node_modules/.bin/tsc", "--lsp", "--stdio" },
 		filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
 		root_dir = function(bufnr, on_dir)
-			if in_tsc7_project(bufnr) then
-				on_dir(tsc7_project)
+			local matched = in_tsc7_project(bufnr)
+			if matched then
+				on_dir(matched)
 			end
 		end,
 	})
@@ -68,6 +77,16 @@ local lsp_names = {
 	"postgres_lsp",
 	"svelte",
 }
+
+vim.lsp.config(
+	"qmlls",
+	vim.tbl_deep_extend("force", base_config, {
+		cmd = { "/usr/lib/qt6/bin/qmlls" }, -- use the real path from step 1
+		filetypes = { "qml", "qmljs" },
+		root_markers = { ".qmlls.ini", "CMakeLists.txt", ".git" },
+	})
+)
+vim.lsp.enable("qmlls")
 
 for _, name in ipairs(lsp_names) do
 	vim.lsp.config(name, base_config)
@@ -122,6 +141,18 @@ vim.lsp.config(
 )
 vim.lsp.enable("ocamllsp")
 
+-- tailwindcss
+-- OCaml
+vim.lsp.config(
+	"tailwindcss",
+	vim.tbl_deep_extend("force", base_config, {
+		filetypes = {
+			"typescriptreact",
+			"javascriptreact",
+		},
+	})
+)
+
 -- Uiua
 vim.lsp.config(
 	"uiua",
@@ -153,8 +184,7 @@ cmp.setup.filetype({ "sql" }, {
 	},
 })
 
--- nim lsp
--- Nim Registration
+-- nimlangserver Registration
 vim.lsp.config(
 	"nimlangserver",
 	vim.tbl_deep_extend("force", base_config, {
@@ -174,15 +204,15 @@ vim.lsp.config(
 				return
 			end,
 		},
-		settings = {
-			nim = {
-				inlayHints = {
-					typeHints = true,
-					exceptionHints = true,
-					parameterHints = true,
-				},
-			},
-		},
+		-- settings = {
+		-- 	nim = {
+		-- 		inlayHints = {
+		-- 			typeHints = true,
+		-- 			exceptionHints = true,
+		-- 			parameterHints = true,
+		-- 		},
+		-- 	},
+		-- },
 	})
 )
 
@@ -194,3 +224,51 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.lsp.start("nimlangserver")
 	end,
 })
+
+-- -- nim lsp (minlsp)
+-- vim.lsp.config(
+-- 	"minlsp",
+-- 	vim.tbl_deep_extend("force", base_config, {
+-- 		cmd = { "minlsp" }, -- Ensure this is in your $PATH after `nimble build`/`nimble install`
+-- 		filetypes = { "nim", "nims" },
+-- 		root_markers = { "*.nimble", "nim.cfg", "config.nims", ".git" },
+-- 		handlers = {
+-- 			["window/showMessage"] = function(_, result, ctx)
+-- 				if result.type <= 2 then
+-- 					vim.lsp.handlers["window/showMessage"](_, result, ctx)
+-- 				end
+-- 			end,
+-- 			["window/logMessage"] = function(_, result, ctx)
+-- 				return
+-- 			end,
+-- 		},
+-- 		-- no `settings.nim.inlayHints` here — minlsp has no semantic analysis,
+-- 		-- so it can't provide type/exception/parameter inlay hints at all
+-- 	})
+-- )
+--
+-- vim.lsp.enable("minlsp")
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = { "nim", "nims", "nimble" },
+-- 	callback = function(args)
+-- 		vim.lsp.start("minlsp")
+-- 	end,
+-- })
+
+-- envlsp
+-- vim.lsp.config(
+--   "envlsp",
+--   vim.tbl_deep_extend("force", base_config, {
+--     cmd = { "envlsp" },  -- ensure bin/envlsp is on $PATH, or use an absolute path
+--     filetypes = { "env" },
+--     root_markers = { "env.schema.json", ".git" },
+--   })
+-- )
+--
+-- vim.lsp.enable("envlsp")
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "env" },
+--   callback = function(args)
+--     vim.lsp.start("envlsp")
+--   end,
+-- })

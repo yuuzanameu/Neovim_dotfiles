@@ -1,5 +1,6 @@
 local wk = require("which-key")
 wk.add({
+  ---
 	-- core basic keymaps
 	{ "<C-\\>", "<cmd>ToggleTerm direction=float<cr>", desc = "Toggle Float Terminal" },
 	{ "<leader><Space>", "<cmd>Telescope buffers<cr>", desc = "Find Open Buffers" },
