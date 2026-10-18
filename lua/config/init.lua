@@ -6,6 +6,7 @@ require("config.cmp_snippets")
 require("config.which-key-maps")
 require("config.agda-which-key")
 require("config.folds.init")
+require("config.textops")
 
 -- config/init.lua
 local config_path = vim.fn.stdpath("config")
