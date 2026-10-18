@@ -109,8 +109,9 @@ end, {})
 vim.o.wildmenu = true
 vim.o.wildmode = "noselect,full" -- show matches without pre-selecting one
 vim.o.wildoptions = "tagfile"    -- horizontal bar; use "pum,tagfile" for the vertical popup
+-- vim.o.pumborder = 'rounded'
 
 vim.api.nvim_create_autocmd("CmdlineChanged", {
-  pattern = ":",
+  pattern = { ":", "/", "?" },
   callback = function() vim.fn.wildtrigger() end,
 })

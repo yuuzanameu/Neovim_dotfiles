@@ -1,3 +1,5 @@
+require("config.basic_settings")
+require("config.keymaps")
 require("config.lazy")
 require("config.dashboard")
 require("config.cmp_snippets")
