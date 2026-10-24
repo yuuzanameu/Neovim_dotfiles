@@ -34,6 +34,14 @@ preview.opts = {
   -- through a folder of images doesn't render every one of them
   debounce_ms = 50,
 
+  -- false: never blow an image up past its natural pixel size, so icons and
+  -- sprites stay sharp. Large images are still scaled down to fit.
+  upscale = false,
+
+  -- centre the image in the preview column (only visible once it's smaller
+  -- than the column)
+  center = false,
+
   extensions = {
     "png", "jpg", "jpeg", "gif", "webp", "bmp",
     "avif", "tif", "tiff", "ico", "heic",
@@ -95,6 +103,49 @@ function preview.rect()
   }
 end
 
+--- Terminal cell size in pixels, as image.nvim measured it.
+local function cell_size()
+  local ok, term = pcall(require, "image.utils.term")
+  if not ok or type(term.get_size) ~= "function" then
+    return nil
+  end
+  local size = term.get_size()
+  if not size or not size.cell_width or not size.cell_height then
+    return nil
+  end
+  if size.cell_width <= 0 or size.cell_height <= 0 then
+    return nil
+  end
+  return size
+end
+
+--- Shrink the preview rectangle down to the image's natural size, so a 64x64
+--- icon is drawn 64x64 instead of being stretched across the whole column.
+--- Anything bigger than the column is left alone and gets scaled down to fit.
+function preview.fit(img, rect)
+  local geom = { x = rect.x, y = rect.y, width = rect.width, height = rect.height }
+  if preview.opts.upscale then
+    return geom
+  end
+
+  local size = cell_size()
+  local pw, ph = img.image_width, img.image_height
+  if not size or not pw or not ph then
+    return geom
+  end
+
+  -- natural size, converted from pixels to terminal cells
+  geom.width = math.min(geom.width, math.ceil(pw / size.cell_width))
+  geom.height = math.min(geom.height, math.ceil(ph / size.cell_height))
+
+  if preview.opts.center then
+    geom.x = rect.x + math.floor((rect.width - geom.width) / 2)
+    geom.y = rect.y + math.floor((rect.height - geom.height) / 2)
+  end
+
+  return geom
+end
+
 function preview.show(path)
   preview.clear()
   state.path = path
@@ -124,8 +175,9 @@ function preview.show(path)
     if not made or not img then
       return
     end
+    local geom = preview.fit(img, rect)
     pcall(function()
-      img:render(rect)
+      img:render(geom)
     end)
 
     if seq ~= state.seq then
