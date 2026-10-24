@@ -108,6 +108,11 @@ return {
       stdin = true,
     })
 
+    ft("racket"):fmt({
+      cmd = "raco",
+      args = { "fixw", },
+      stdin = true,
+    })
 
     vim.g.guard_config = {
       fmt_on_save = true,
