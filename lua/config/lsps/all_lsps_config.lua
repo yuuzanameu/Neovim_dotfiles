@@ -32,6 +32,9 @@ local base_config = {
 local tsc7_projects = {
   "/home/vladi/work/Letest/letest-backend",
   "/home/vladi/work/Horizon/horizon-contracts",
+  "/home/vladi/work/Horizon/horizon-home-mixer",
+  -- "/home/vladi/work/Horizon/horizon-backend"
+
 }
 
 local function in_tsc7_project(bufnr)
@@ -149,6 +152,7 @@ vim.lsp.config(
     filetypes = {
       "typescriptreact",
       "javascriptreact",
+      "svelte"
     },
   })
 )

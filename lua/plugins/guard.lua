@@ -21,8 +21,8 @@ return {
       stdin = true,
     })
 
-    ft("json"):fmt("prettierd")
-    ft("typescript,javascript,typescriptreact"):fmt("biome")
+    ft("svelte"):fmt("prettierd")
+    ft("typescript,javascript,typescriptreact,svg,jsonc,json"):fmt("biome")
     -- ft("typescript,javascript,typescriptreact"):fmt("prettierd")
 
     -- FOURMOLU
@@ -63,6 +63,7 @@ return {
 
     ft("rust"):fmt({
       cmd = "/home/vladi/.cargo/bin/rustfmt",
+      stdin = true,
       ignore_error = true,
       no_append_cr = true,  -- Don't append carriage return
       try_fallback = false, -- Don't try fallback formatters
